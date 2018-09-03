@@ -1,5 +1,6 @@
 package org.checat.http_stats;
 
+import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.MappingIterator;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectReader;
@@ -31,9 +32,12 @@ public class Main {
             System.out.println("If stats.json is omitted it is read from standard input.");
             return;
         }
-        MappingIterator<Event> eventIterator = null;
+        MappingIterator<Event> eventIterator;
         try {
-            eventIterator = objectMapper.readerFor(Event.class).readValues(in);
+            eventIterator = objectMapper
+                    .readerFor(Event.class)
+                    .without(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES)
+                    .readValues(in);
         } catch (IOException e) {
             System.out.println("Invalid JSON data.");
             e.printStackTrace();

@@ -11,14 +11,16 @@ public class Event {
     private final String userid;
     @JsonProperty
     private final String url;
-    @JsonProperty
-    private final Instant timestamp;
+    @JsonProperty("timestampMillis")
+    private final long timestampMillis;
 
     @JsonCreator
-    public Event(@JsonProperty String userid, @JsonProperty String url, @JsonProperty Instant timestamp) {
+    public Event(@JsonProperty("userid") String userid,
+                 @JsonProperty("url") String url,
+                 @JsonProperty("timestampMillis") long timestampMillis) {
         this.userid = userid;
         this.url = url;
-        this.timestamp = timestamp;
+        this.timestampMillis = timestampMillis;
     }
 
     public String getUserid() {
@@ -29,7 +31,7 @@ public class Event {
         return url;
     }
 
-    public Instant getTimestamp() {
-        return timestamp;
+    public long getTimestampMillis() {
+        return timestampMillis;
     }
 }
